@@ -14,9 +14,9 @@ const Page5 = ({ isEditing }) => {
       <div
         className={`${
           isEditing ? "-translate-y-[39.3rem]" : "-translate-y-[40rem]"
-        } mx-[52px] font-poppins space-y-4 w-[87%] text-sm tracking-tight text-[#08263d]  bg-white`}
+        } mx-[52px] font-poppins space-y-4 w-[87%] text-sm tracking-tight text-[#08263d]`}
       >
-        <CostBreakdown isEditing={isEditing}/>
+        <CostBreakdown isEditing={isEditing} />
         <MonthlyFee isEditing={isEditing} />
       </div>
     </div>
