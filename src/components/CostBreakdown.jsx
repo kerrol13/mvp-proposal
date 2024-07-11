@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CostBreakdownAddForm from "./CostBreakdownAddForm";
 
 const CostBreakdown = ({ isEditing }) => {
   const [inputs, setInputs] = useState();
@@ -55,16 +56,17 @@ const CostBreakdown = ({ isEditing }) => {
           <strong className="w-[493px]">Fee</strong>
           <strong>Amount</strong>
         </div>
-        {array.map((data, index) => (
+        {array.map((data) => (
           <div
             key={data.id}
             className={`mt-1 text-xs flex py-[3px] border-b-[1px] border-[#88d6ff]`}
           >
-            {/* w-[493px] */}
-            <p className={`w-[2100px] font-medium relative ${baseTopClass}`}>
+            <p className={`w-[2250px] font-medium relative ${baseTopClass}`}>
               {data.fee}
             </p>
-            <p className={`relative font-semibold w-[70%] ${baseTopClass}`}>
+            <p
+              className={`relative font-semibold w-[70%] text-nowrap ${baseTopClass}`}
+            >
               US$ {new Intl.NumberFormat().format(data.amount)}
             </p>
             <button
@@ -78,37 +80,16 @@ const CostBreakdown = ({ isEditing }) => {
           </div>
         ))}
         {isEditing && (
-          <form onSubmit={handleAdd} className="flex">
-            <div className=" w-[855px]">
-              <input
-                required
-                name="fee"
-                onChange={handleInputs}
-                placeholder="Fee"
-                className=" text-xs mt-1 py-[3px] border-b-[1px] border-black/50"
-              />
-            </div>
-            <div className="text-xs font-semibold">
-              US${" "}
-              <input
-                required
-                name="amount"
-                onChange={handleInputs}
-                type="number"
-                placeholder="Amount"
-                className="mt-1 py-[3px] w-[70%] border-b-[1px] border-black/50"
-              />
-            </div>
-            <button className="text-xs font-semibold p-[7px] bg-[#38bbff] w-20 rounded-lg my-[2px] text-white">
-              Add
-            </button>
-          </form>
+          <CostBreakdownAddForm
+            handleAdd={handleAdd}
+            handleInputs={handleInputs}
+          />
         )}
 
         <div
           className={`mt-1 text-xs flex py-[6px] font-bold text-[#38bbff] relative ${baseTopClass}`}
         >
-          <p className="w-[493px] uppercase">Total One-Off Cost</p>
+          <p className="w-[498px] uppercase pb-2">Total One-Off Cost</p>
           <p>US$ {new Intl.NumberFormat().format(totalAmount)}</p>
         </div>
       </div>

@@ -13,7 +13,7 @@ function App() {
   const { toPDF, targetRef } = usePDF({
     filename: `${clientName} - MVP Proposal`,
     page: {
-      margin: 0.1,
+      margin: 0.0,
     },
   });
   useEffect(() => {
@@ -24,17 +24,17 @@ function App() {
   }, [isEditing]);
 
   return (
-    <ReactLenis root>
-      <div className="flex-col flex items-center justify-center m-10 bg-slate-50">
+    <ReactLenis root className="bg-slate-50">
+      <div className="flex-col flex items-center justify-center m-10 ">
         <div ref={targetRef}>
-          {/* <Page1
+          <Page1
             clientName={clientName}
             setClientName={setClientName}
             isEditing={isEditing}
           />
           <Page2 isEditing={isEditing} />
           <Page3 isEditing={isEditing} />
-          <Page4 isEditing={isEditing} /> */}
+          <Page4 isEditing={isEditing} />
           <Page5 isEditing={isEditing} />
         </div>
 

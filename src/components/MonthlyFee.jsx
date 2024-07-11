@@ -1,8 +1,34 @@
+import { useState } from "react";
+import MonthlyFeeAddForm from "./MonthlyFeeAddForm";
+
 const MonthlyFee = ({ isEditing }) => {
-  const array = [
-    { jobPosition: "Accounting Clerk", quantity: 1, total: 1234 },
-    { jobPosition: "Accounting Clerk", quantity: 1, total: 1234 },
-  ];
+  const [inputs, setInputs] = useState();
+  const [array, setArray] = useState([
+    { id: 1, jobPosition: "Accounting Clerk", quantity: 1, total: 1234 },
+    { id: 2, jobPosition: "Accounting Clerk", quantity: 1, total: 123422323 },
+  ]);
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
+
+    setInputs((prev) => ({
+      ...prev,
+      [name]: name === "total" ? +value : value,
+    }));
+  };
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (!inputs) {
+      return;
+    }
+    setArray((prev) => [
+      ...prev,
+      { ...inputs, id: Math.floor(Math.random() * 100) + 1 },
+    ]);
+  };
+  const handleRemove = (id) => {
+    const newArray = array.filter((data) => data.id != id);
+    setArray(newArray);
+  };
 
   const baseTopClass = isEditing ? "" : "-top-2";
 
@@ -35,7 +61,7 @@ const MonthlyFee = ({ isEditing }) => {
           <div
             key={index}
             className={`mt-1 text-xs flex relative py-[3px] border-b-[1px] border-[#88d6ff] ${baseTopClass} ${
-              index === array.length - 1 ? "border-b-[0px] py-[6px]" : ""
+              index === array.length - 1 ? "border-b-[0]" : ""
             }`}
           >
             <p className={`relative font-medium w-[387px] ${baseTopClass}`}>
@@ -44,11 +70,23 @@ const MonthlyFee = ({ isEditing }) => {
             <p className={`relative font-semibold w-[110px] ${baseTopClass}`}>
               {data.quantity}
             </p>
-            <p className={`relative font-semibold ${baseTopClass}`}>
-              US$ {data.total}
+            <p
+              className={`relative font-semibold w-[70px] text-nowrap ${baseTopClass}`}
+            >
+              US$ {new Intl.NumberFormat().format(data.total)}
             </p>
+            <button
+              onClick={() => handleRemove(data.id)}
+              className={`text-xs font-semibold  flex justify-end  p-[1px] w-20 rounded-lg my-[2px] text-red-500 ${
+                isEditing ? "" : "opacity-0"
+              }`}
+            >
+              Remove
+            </button>
           </div>
         ))}
+        {isEditing &&   <MonthlyFeeAddForm handleAdd={handleAdd} handleInputs={handleInputs} />}
+     
       </div>
     </div>
   );
