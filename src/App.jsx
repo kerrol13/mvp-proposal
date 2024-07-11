@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Page1 from "./components/Page1";
 import { Resolution, usePDF } from "react-to-pdf";
 import Page2 from "./components/Page2";
@@ -6,6 +6,7 @@ import Page3 from "./components/Page3";
 import Page4 from "./components/Page4";
 import ReactLenis from "lenis/react";
 import Page5 from "./components/Page5";
+import DownloadIcon from "./assets/DownloadIcon.jsx";
 
 function App() {
   const [isEditing, setIsEditing] = useState(true);
@@ -38,8 +39,12 @@ function App() {
           <Page5 isEditing={isEditing} />
         </div>
 
-        <button className="bg-red-300" onClick={() => setIsEditing(false)}>
-          Download
+        <button
+          className="bg-[#38bbff]  p-5 rounded-xl font-bold text-white shadow-xl flex gap-2 justify-center items-center"
+          onClick={() => setIsEditing(false)}
+        >
+          <DownloadIcon />
+          Download PDF
         </button>
       </div>
     </ReactLenis>
