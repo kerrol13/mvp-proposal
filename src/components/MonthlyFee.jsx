@@ -3,10 +3,7 @@ import MonthlyFeeAddForm from "./MonthlyFeeAddForm";
 
 const MonthlyFee = ({ isEditing }) => {
   const [inputs, setInputs] = useState();
-  const [array, setArray] = useState([
-    { id: 1, jobPosition: "Accounting Clerk", quantity: 1, total: 1234 },
-    { id: 2, jobPosition: "Accounting Clerk", quantity: 1, total: 123422323 },
-  ]);
+  const [array, setArray] = useState([]);
   const handleInputs = (e) => {
     const { name, value } = e.target;
 
@@ -61,7 +58,7 @@ const MonthlyFee = ({ isEditing }) => {
           <div
             key={index}
             className={`mt-1 text-xs flex relative py-[3px] border-b-[1px] border-[#88d6ff] ${baseTopClass} ${
-              index === array.length - 1 ? "border-b-[0]" : ""
+              index === array.length - 1 ? "border-b-[0px]" : ""
             }`}
           >
             <p className={`relative font-medium w-[387px] ${baseTopClass}`}>
@@ -85,8 +82,12 @@ const MonthlyFee = ({ isEditing }) => {
             </button>
           </div>
         ))}
-        {isEditing &&   <MonthlyFeeAddForm handleAdd={handleAdd} handleInputs={handleInputs} />}
-     
+        {isEditing && (
+          <MonthlyFeeAddForm
+            handleAdd={handleAdd}
+            handleInputs={handleInputs}
+          />
+        )}
       </div>
     </div>
   );

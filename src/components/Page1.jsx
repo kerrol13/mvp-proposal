@@ -1,14 +1,30 @@
 import image1 from "../assets/page1.avif";
 import ReactTextareaAutosize from "react-textarea-autosize";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Calendar } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import dayjs from "dayjs";
+import useVisibilityToggle from "../hooks/useVisibilityToggle";
 
 const Page1 = ({ isEditing, clientName, setClientName }) => {
   const [clientBusiName, setClientBusiName] = useState("");
-  const [date, setDate] = useState("[Date]");
+  const [date, setDate] = useState();
+  const [isCalOpen, setIsCalOpen] = useState(false);
+  const dateRef = useRef(null);
 
+  const handleOpenCal = () => {
+    setIsCalOpen((prev) => !prev);
+  };
+
+  const handleSelectedDate = (value) => {
+    setDate(value);
+  };
+
+  useVisibilityToggle(handleOpenCal, dateRef);
   return (
     <div
-      className={`overflow-hidden min-w-a4 min-h-a4 w-a4 h-a4 ${
+      className={` min-w-a4 min-h-a4 w-a4 h-a4 ${
         isEditing ? "shadow-xl my-5" : ""
       }`}
     >
@@ -51,14 +67,22 @@ const Page1 = ({ isEditing, clientName, setClientName }) => {
             )}
           </span>
           {isEditing ? (
-            <input
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              placeholder="[Date]"
-              className="bg-transparent placeholder-black "
-            />
+            <div className="w-20">
+              <button className="bg-transparent" onClick={handleOpenCal}>
+                {date ? dayjs(date).format("MMM DD, YYYY") : "[Date]"}
+              </button>
+              {isCalOpen && (
+                <div ref={dateRef}>
+                  <Calendar
+                    onChange={handleSelectedDate}
+                    date={date}
+                    className="rounded-2xl overflow-hidden shadow-xl border-[1px]"
+                  />
+                </div>
+              )}
+            </div>
           ) : (
-            <p>{date}</p>
+            <p>{dayjs(date).format("MMM DD, YYYY")}</p>
           )}
         </div>
       </div>
